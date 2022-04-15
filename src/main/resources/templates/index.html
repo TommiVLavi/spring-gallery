@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Enjoy the art!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	</head>
+
+	<body>
+		<h1>Welcome,</h1>
+		<h3>enjoy all the diverse wonders of art!</h3>
+		
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th> <th>Year</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="art : ${paintings}">
+						<td th:text="${art.name}"/>
+						<td th:text="${art.year}"/>
+					</tr>
+				</tbody>
+			</table>
+			
+			<a href="">Add another painting</a>
+		</div>
+	</body>
+</html>
