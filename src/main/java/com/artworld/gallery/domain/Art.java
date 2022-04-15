@@ -33,9 +33,7 @@ public class Art {
 
 	// A constructor without any of the fields, so the object can be
 	//created without anything written
-	public Art() {
-		super();
-	}
+	public Art() {}
 
 
 	//The getters for each field to fetch any  written data, 
@@ -53,6 +51,14 @@ public class Art {
 	}
 
 	//The setters for rewriting data fields of an object 
+	
+	//We may not need to edit ID, but this one is none the less
+	//important when it comes to modifying an existing object without 
+	//creating duplication
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org">
+	<head>
+		<title>Let's modify something!</title>
+		<meta http-equiv="Content-Type" content="text/html" charset=UTF-8/>
+	</head>
+	
+	<body>
+		<h1>Modifying</h1>
+		
+		<div>
+			<form th:object="${art}" th:action="@{../save}" action="#" method="post">
+			
+				<input type="hidden" th:field="*{id}" class="form-control"/>
+				
+				<label for="name">Name</label>
+				<p> <input type="text" id="name" th:field="*{name}"/> </p>
+				
+				<label for="year">Year</label>
+				<p> <input type="text" id="year" th:field="*{year}"/> </p>
+				
+				<input type="submit" class="btn btn-success" value="Modify"/>
+			</form>
+		</div>
+	</body>
+</html>

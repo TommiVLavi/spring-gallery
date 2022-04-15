@@ -19,7 +19,7 @@ public class ArtController {
 	@Autowired
 	private ArtRepository artRep;
 	
-	
+	//LOBBY
 	//This controller leads to a main room with a full list of all
 	//the saved paintings in the database
 	//It simultaneously fetches all the data via "findAll()" CRUD method
@@ -33,6 +33,7 @@ public class ArtController {
 		return "index";
 	}
 	
+	//ADD
 	//This one, on the other hand, after clicking on a link in the lobby template, 
 	// leads to the "add" page and simultaneously prepares a new art object, with 
 	//an empty constructor,
@@ -43,6 +44,7 @@ public class ArtController {
 		return "add";
 	}
 	
+	//SAVE
 	// This is a separate method to save user-suggested data into the database,
 	// thus using a POST method.
 	// When clicking a submit button from the "add" template, it will lead
@@ -53,6 +55,7 @@ public class ArtController {
 		return "redirect:lobby";
 	}
 	
+	//REMOVE
 	// This one will delete a specific saved object based on an id
 	// number that it extracts from a tip of an URL address via 
 	//"@PathVariable" annotation. The list template generates links
@@ -63,4 +66,22 @@ public class ArtController {
 		artRep.deleteById(artId);
 		return "redirect:../lobby";
 	}
+	
+	//EDIT
+	// Very similar to the remove method, particularly with its id retrieving function, 
+	//but also brings the user to an edit template and
+	// permits an edit of an saved object, which will be retrieved from a repository
+	// via findById CRUD method
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") Long artId, Model model) {
+		model.addAttribute("art", artRep.findById(artId));
+		return "edit";
+	}
+	
+	//LOGIN
+	@RequestMapping(value = "/login")
+	public String login() {
+		return "login";
+	}
+	
 }

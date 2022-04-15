@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>Enjoy the art!</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="Content-Type" content="text/html" charset=UTF-8/>
 	</head>
 
 	<body>
 		<h1>Welcome,</h1>
 		<h3>enjoy all the diverse wonders of art!</h3>
+		
+		<h5> <a href="/login">Login</a> </h5>
 		
 		<div>
 			<table>
@@ -22,6 +24,7 @@
 						<td th:text="${art.name}"/>
 						<td th:text="${art.year}"/>
 						<td> <a th:href="@{/delete/{id} (id=${art.id})}">Delete</a> </td>
+						<td> <a th:href="@{/edit/{id} (id=${art.id})}">Modify</a> </td>
 					</tr>
 				</tbody>
 			</table>
