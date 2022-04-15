@@ -21,11 +21,12 @@
 					<tr th:each="art : ${paintings}">
 						<td th:text="${art.name}"/>
 						<td th:text="${art.year}"/>
+						<td> <a th:href="@{/delete/{id} (id=${art.id})}">Delete</a> </td>
 					</tr>
 				</tbody>
 			</table>
 			
-			<a href="">Add another painting</a>
+			<a href="/add">Add another painting</a>
 		</div>
 	</body>
 </html>

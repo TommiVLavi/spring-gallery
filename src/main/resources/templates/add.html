@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Let's add some more masterpieces</title>
+		<meta http-equiv="Content-Type" content="text/html charset=UTF-8">
+	</head>
+	
+	<body>
+		<h1>Let's add some more masterpieces</h1>
+		
+		<div>
+			<form th:object="${painting}" th:action="@{/save}" action="#" method="post">
+				<label for="name">Name</label>
+				<p> <input type="text" id="name" th:field="*{name}"/> </p>
+				
+				<label for="year">Year</label>
+				<p><input type="text" id="year" th:field="*{year}"/> </p>
+				
+				<input type ="submit" value="Save it!"/>
+			</form>
+		</div>
+	</body>
+</html>
