@@ -1,6 +1,7 @@
 package com.artworld.gallery.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,15 @@ public class ArtController {
 	// leads to the "add" page and simultaneously prepares a new art object, with 
 	//an empty constructor,
 	//labeled for Thyme as "painting", before the user submits new data into it.
+	//
+	//Also, as it is annotated with "@PreAuthorize", a part of the Spring Security,
+	//it is one of the methods that require a certain role of a logged in user, 
+	//particularly, admin role, to perform this method. Although the link of this
+	//function is only visible for the admin, this one step ahead of securing
+	//the method further. This would force a user to sign in even if the link
+	//is still would be available.
 	@RequestMapping(value = "/add")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String add(Model model) {
 		model.addAttribute("painting", new Art());
 		return "add";
@@ -62,6 +71,7 @@ public class ArtController {
 	// for each data row that generate the URL numbers based on fetched
 	// id numbers from objects
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public String remove(@PathVariable("id")Long artId) {
 		artRep.deleteById(artId);
 		return "redirect:../lobby";
@@ -73,12 +83,15 @@ public class ArtController {
 	// permits an edit of an saved object, which will be retrieved from a repository
 	// via findById CRUD method
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
 	public String edit(@PathVariable("id") Long artId, Model model) {
 		model.addAttribute("art", artRep.findById(artId));
 		return "edit";
 	}
 	
 	//LOGIN
+	//A site for login. The user will be forced to the page through this method
+	// that only gives the template.
 	@RequestMapping(value = "/login")
 	public String login() {
 		return "login";
