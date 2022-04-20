@@ -9,12 +9,30 @@
 		<h1>Modifying</h1>
 		
 		<div>
-			<form th:object="${art}" th:action="@{../save}" action="#" method="post">
+			<form th:object="${art}" th:action="@{../saveArt}" action="#" method="post">
 			
 				<input type="hidden" th:field="*{id}" class="form-control"/>
 				
 				<label for="name">Name</label>
 				<p> <input type="text" id="name" th:field="*{name}"/> </p>
+				
+				<label for="artlist">Artist</label>
+				<p> <select id="artlist" th:field="*{artist}" class="form-control">
+					<option th:each="artist: ${creators}"
+							th:value="${artist.artistid}"
+							th:text="${artist.firstName}">
+					</option>
+				</select> </p>
+				
+				<p><a href="/add">Your artist is missing?</a></p>
+				
+				<label for="medlist">Medium</label>
+				<p> <select id="medlist" th:field="*{medium}" class="form-control">
+					<option th:each="medium: ${paints}"
+							th:value="${medium.mediumid}"
+							th:text="${medium.name}">
+					</option>
+				</select> </p>
 				
 				<label for="year">Year</label>
 				<p> <input type="text" id="year" th:field="*{year}"/> </p>

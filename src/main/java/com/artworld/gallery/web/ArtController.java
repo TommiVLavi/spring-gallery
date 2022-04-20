@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.artworld.gallery.domain.ArtRepository;
+import com.artworld.gallery.domain.Artist;
+import com.artworld.gallery.domain.ArtistRepository;
+import com.artworld.gallery.domain.MediumRepository;
 import com.artworld.gallery.domain.Art;
 
 @Controller
@@ -19,6 +22,12 @@ public class ArtController {
 	//repository dependencies into this class
 	@Autowired
 	private ArtRepository artRep;
+	
+	@Autowired
+	private MediumRepository medRep;
+	
+	@Autowired
+	private ArtistRepository artistRep;
 	
 	//LOBBY
 	//This controller leads to a main room with a full list of all
@@ -34,34 +43,47 @@ public class ArtController {
 		return "index";
 	}
 	
-	//ADD
+	//ART
 	//This one, on the other hand, after clicking on a link in the lobby template, 
 	// leads to the "add" page and simultaneously prepares a new art object, with 
 	//an empty constructor,
 	//labeled for Thyme as "painting", before the user submits new data into it.
 	//
+	//It also brings in a full stock of entity objects from the medium database
+	// for a user to choose for a new object
+	
 	//Also, as it is annotated with "@PreAuthorize", a part of the Spring Security,
 	//it is one of the methods that require a certain role of a logged in user, 
 	//particularly, admin role, to perform this method. Although the link of this
 	//function is only visible for the admin, this one step ahead of securing
 	//the method further. This would force a user to sign in even if the link
-	//is still would be available.
+	//is still would be available. 
 	@RequestMapping(value = "/add")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String add(Model model) {
 		model.addAttribute("painting", new Art());
+		model.addAttribute("paints", medRep.findAll());
+		model.addAttribute("creators", artistRep.findAll());
+		model.addAttribute("creator", new Artist());
 		return "add";
 	}
 	
-	//SAVE
+	//SAVE ART
 	// This is a separate method to save user-suggested data into the database,
 	// thus using a POST method.
 	// When clicking a submit button from the "add" template, it will lead
 	// to the "/save" index
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveArt", method = RequestMethod.POST)
 	public String save(Art art) {
 		artRep.save(art);
 		return "redirect:lobby";
+	}
+	
+	//SAVE ARTIST
+	@RequestMapping(value = "/saveArtist", method = RequestMethod.POST)
+	public String saveArtist(Artist art) {
+		artistRep.save(art);
+		return "redirect:add";
 	}
 	
 	//REMOVE
@@ -86,6 +108,8 @@ public class ArtController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String edit(@PathVariable("id") Long artId, Model model) {
 		model.addAttribute("art", artRep.findById(artId));
+		model.addAttribute("paints", medRep.findAll());
+		model.addAttribute("creators", artistRep.findAll());
 		return "edit";
 	}
 	
