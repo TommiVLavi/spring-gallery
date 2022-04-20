@@ -15,9 +15,11 @@
 			<input type="submit" value="Sign In">
 		</form>
 		
-		<form sec:authorize="hasRole('ADMIN')" th:action="@{/logout}" method="post">
+		<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method="post">
 			<input type="submit" value="Sign Out">
 		</form>
+		
+		
 		
 		<div>
 			<table>
@@ -31,17 +33,17 @@
 					<tr th:each="art : ${paintings}">
 						<td th:text="${art.name}"/>
 						<td th:text="${art.year}"/>
-						<td sec:authorize="hasRole('ADMIN')"> 
+						<td sec:authorize="hasAuthority('ADMIN')"> 
 							<a th:href="@{/delete/{id} (id=${art.id})}">Delete</a> 
 						</td>
-						<td sec:authorize="hasRole('ADMIN')"> 
+						<td sec:authorize="hasAuthority('ADMIN')"> 
 							<a th:href="@{/edit/{id} (id=${art.id})}">Modify</a> 
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			
-			<div sec:authorize="hasRole('ADMIN')">
+			<div sec:authorize="hasAuthority('ADMIN')">
 				<a href="/add">Add another painting</a>
 			</div>
 		</div>

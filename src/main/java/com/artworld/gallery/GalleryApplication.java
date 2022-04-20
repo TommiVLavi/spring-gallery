@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.artworld.gallery.domain.ArtRepository;
+import com.artworld.gallery.domain.UserRepository;
 import com.artworld.gallery.domain.Art;
+import com.artworld.gallery.domain.User;
 
 //This is the class is where the whole entity of the application starts!
 //This was generated automatically by the Spring initializer web app, with some 
@@ -38,11 +40,16 @@ public class GalleryApplication {
 //The same objects will be created for testing each time the app launches or restarts, thus
 //all attempted data modifications via the controller methods aren't permanent
 	@Bean
-	public CommandLineRunner data(ArtRepository artRep) {
+	public CommandLineRunner data(ArtRepository artRep, UserRepository usrRep) {
 		return args -> {
 			artRep.save(new Art("At Eternity's Gate",1890));
 			artRep.save(new Art("The Son of Man",1964));
 			artRep.save(new Art("Oath of the Horatii",1784));
+			
+			//1234
+			usrRep.save(new User("Tommi","$2y$08$v29bV81VMd3cueR3Fj/2yeSmV/eYiBBNoYg9HCz6TDLdJaINLohcq","ADMIN"));
+			//4321
+			usrRep.save(new User("Helena","$2y$08$vnCdSbeV.jtd6AF.knoyruiIgDMalrUpSZI5e59IJ3iwk1P.qrNtO","ADMIN"));
 		};
 	}
 }

@@ -47,7 +47,7 @@ public class ArtController {
 	//the method further. This would force a user to sign in even if the link
 	//is still would be available.
 	@RequestMapping(value = "/add")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String add(Model model) {
 		model.addAttribute("painting", new Art());
 		return "add";
@@ -71,7 +71,7 @@ public class ArtController {
 	// for each data row that generate the URL numbers based on fetched
 	// id numbers from objects
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String remove(@PathVariable("id")Long artId) {
 		artRep.deleteById(artId);
 		return "redirect:../lobby";
@@ -83,7 +83,7 @@ public class ArtController {
 	// permits an edit of an saved object, which will be retrieved from a repository
 	// via findById CRUD method
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String edit(@PathVariable("id") Long artId, Model model) {
 		model.addAttribute("art", artRep.findById(artId));
 		return "edit";

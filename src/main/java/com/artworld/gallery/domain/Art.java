@@ -10,13 +10,15 @@ import javax.persistence.GenerationType;
 public class Art {
 	
 	//The primary key field. Each art object will include an unique, 
-	//automatically generated number
+	//automatically generated, permanent number
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(nullable = false, updatable = false)
 	private Long id;
 	
-	//The name field cannot have a null value
-	@Column(nullable=false)
+	//The name field cannot have a null value and none of the 
+	//generated objects can have a same name
+	@Column(nullable=false, unique=true)
 	private String name;
 	
 	//The year field, on the other hand, isn't mandatory

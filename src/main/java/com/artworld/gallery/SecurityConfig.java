@@ -3,8 +3,10 @@ package com.artworld.gallery;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import com.artworld.gallery.web.UsDeService;
 
 @Configuration
 @EnableWebSecurity
@@ -38,19 +43,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.permitAll()
 				.and()
 			.logout()
+				.logoutSuccessUrl("/lobby")
 				.permitAll();
 	}
+	@Autowired
+	private UsDeService uds;
 	
-	@Bean
-	public UserDetailsService uds() {
-		UserDetails user = User.withDefaultPasswordEncoder()
-				.username("Tommi")
-				.password("1234")
-				.roles("ADMIN")
-				.build();
-			List<UserDetails> users = new ArrayList();
-			users.add(user);
-		
-		return new InMemoryUserDetailsManager(user);
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(uds).passwordEncoder(new BCryptPasswordEncoder(8));
 	}
 }
