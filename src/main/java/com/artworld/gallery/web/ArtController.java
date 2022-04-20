@@ -43,7 +43,7 @@ public class ArtController {
 		return "index";
 	}
 	
-	//ART
+	//ADD
 	//This one, on the other hand, after clicking on a link in the lobby template, 
 	// leads to the "add" page and simultaneously prepares a new art object, with 
 	//an empty constructor,
